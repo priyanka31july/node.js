@@ -1,1 +1,1 @@
-console.log("namaste nodejs")
+console.log("namaste nodejs");
