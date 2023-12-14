@@ -24,5 +24,5 @@ app.use('/', (req, res, next) => {
   res.send('<h1>Hello from express</h1>');
 });
 
-app.listen(3000) ;
+app.listen(6000) ;
  
