@@ -78,4 +78,4 @@ const requestHandler = (req, res) => {
    
   exports.handler=requestHandler;
   exports.SomeText="Some hard coded text";
-.
+
