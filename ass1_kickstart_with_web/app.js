@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     fs.readFile('messages.txt', 'utf8', (err, data) => {
         if (err) { 
-            console.log(err);
+            console.log(err) ;
             data = 'No chat exists';
         }
 
