@@ -27,14 +27,14 @@ main{
 
 }
 .main-header_item{
-    margin:0
+    margin:0;
     padding:0;
 
 }
 
 .main header_item a{
     text-decoration: none;
-    color:white;
+    color:white ;
 }
 
 .main-header_item a:hover,
