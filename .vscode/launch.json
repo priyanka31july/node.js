@@ -14,7 +14,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\ass1_kickstart_with_web\\app.js" ,
+            "program": "${workspaceFolder}\\app.js" ,
             "restart":true,
             "runtimeExecutable": "nodemon" ,
             "console": "integratedTerminal"
