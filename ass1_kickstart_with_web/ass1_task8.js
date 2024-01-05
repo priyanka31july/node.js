@@ -1,69 +1,49 @@
 const http = require('http');
+
 const fs = require('fs');
 
-const requestHandler = (req, res) => {
-    const url = req.url;
-    const method = req.method;
+const server = http.createServer((req, res) => {
 
-    if (url === '/') {
-        fs.readFile('message.txt', { encoding: 'utf-8' }, (err, data) => {
-            if (err) {
-                console.log(err);
-                res.statusCode = 500; 
-                res.end();
-            } else {
-              
-                res.setHeader('Content-Type', 'text/html');
-                res.write('<html>');
-                res.write('<head><title>Enter Message</title></head>');
-                
-                if (data) {
-                    res.write(`<pre>${data}</pre>`); // Printing data as is
-                }
-                
-           
-                res.write('<form action="/message" method="POST"><input type="text" name="message">');
-                res.write('<button type="send">send</button></form>');
-                res.write('</html>');
-                return res.end();
-            }
-        });
-    } else if (url === '/message' && method === 'POST') {
-        const body = [];
-        req.on('data', (chunk) => {
-            body.push(chunk) ;
-        });
+const url = req.url;
+const method = req.method;
 
-        req.on('end', () => {
-            const parsedBody = Buffer.concat(body).toString();
-            const message = parsedBody.split('=')[1];
-            
-            fs.appendFile('message.txt', message + '\n', (err) => {
-                if (err) {
-                    console.log(err);
-                    res.statusCode = 500; 
-                    res.end();
-                } else {
-                    console.log('Inside fs.writeFile');
-                    res.statusCode = 302;
-                    res.setHeader('Location', '/');
-                    return res.end();
-                }
-            });
-        });
-    } else {
-        res.setHeader('Content-Type', 'text/html');
-        res.write('<html>');
-        res.write('<head><title>My first page</title></head>');
-        res.write('<body><h1>Hello from Node.js</h1></body>');
-        res.write('</html>');
-        res.end();
-    }
-};
+if (url === '/') {
+  res.write('<html>');
+  res.write('<head><title>Enter Message</title></head>');
+   res.write('<body><form action="/message" method="POST"><input type="text" name="message"><button type="submit">Submit</button></form></body>');
+  
+  res.write('</html>');
+  return res.end();
+}
+if (url === '/message' && method==='POST') { 
+  // the reason why (form action="/message" method="POST) thi is when user enter data this action also triggere and this if condition perform
+  
+  const body=[];
+   req.on('data',(chunk)=>{
+   console.log(chunk);
+   body.push(chunk);
+   });
+   req.on('end', ()=>{
+   const parsedBody=Buffer.concat(body).toString();
 
-const server = http.createServer(requestHandler);
+   const message=parsedBody.split('=')[1];
 
-server.listen(3000, () => {
-    console.log('Server is listening on port 3000');
+   console.log(parsedBody)
+   fs.writeFileSync('message.txt',message)
+   
+   });
+   res.statusCode=302;
+   res.setHeader('Location', '/');
+   return res.end();
+   }
+    
+
+res.setHeader('Content-Type', 'text/html');
+res.write('<html>');
+res.write('<head><title>My first page</title></head>');
+res.write('<body><h1>Hello from my Node.js server</h1></body>');
+res.write('</html>');
+res.end();
 });
 
+server.listen(2000);
