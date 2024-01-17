@@ -6,4 +6,4 @@ const mysql=require('mysql2');
     password:'nodecomplete'
  });
 
- module.exports=pool.promise();
+ module.exports=pool.promise() ;
